@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./feature/portfolio/ui/components/Navbar";
 import HomePage from "./feature/portfolio/ui/pages/HomePage";
 import AboutMePage from "./feature/portfolio/ui/pages/AboutMePage";
 import ProjectPage from "./feature/portfolio/ui/pages/ProjectPage";
 import ContactPage from "./feature/portfolio/ui/pages/ContactPage";
+import Lenis from "lenis";
 
 const App = () => {
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 2,
+      smoothWheel: true,
+      smoothTouch: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+
   return (
     <main className="min-h-screen w-full overflow-x-hidden bg-[var(--main-bg)] text-[var(--secondary-color)]">
 
