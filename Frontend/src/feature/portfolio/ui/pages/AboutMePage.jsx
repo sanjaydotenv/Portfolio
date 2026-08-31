@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Marque from "../components/Marque";
+import Gradient from "../components/Gradient1"
 
 const AboutMePage = () => {
   const toggleBtn = [
@@ -39,9 +40,10 @@ const AboutMePage = () => {
   const [activeBtn, setActiveBtn] = useState("me");
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen w-full ">
+        
       {/* Toggle */}
-      <div className="aboutme-top h-40 sm:h-48 md:h-60 w-full flex items-center justify-center px-4">
+      <div className="aboutme-top h-40  sm:h-48 md:h-60 w-full flex items-center justify-center px-4">
         <div className="toggle border w-fit rounded-full">
           {toggleBtn.map((btn) => (
             <button
@@ -60,9 +62,9 @@ const AboutMePage = () => {
       {/* Hero */}
 
       {activeBtn === "me" && (
-        <div className="aboutme-hero min-h-[calc(100vh-10rem)] sm:min-h-[calc(100vh-12rem)] md:min-h-[calc(100vh-15rem)] w-full px-5 sm:px-8 md:px-12 lg:px-20 xl:px-30 pb-10 flex flex-col lg:flex-row gap-12 lg:gap-8 xl:gap-16 justify-start lg:justify-between">
+        <div className="aboutme-hero  min-h-[calc(100vh-10rem)] sm:min-h-[calc(100vh-12rem)] md:min-h-[calc(100vh-15rem)] w-full px-5 sm:px-8 md:px-12 lg:px-20 xl:px-30 pb-10 flex flex-col lg:flex-row gap-12 lg:gap-8 xl:gap-16 justify-start lg:justify-between">
           {/* Left Content */}
-          <div className="content-about-me text-2xl w-full lg:w-[40%] flex flex-col gap-5">
+          <div className="content-about-me  text-2xl w-full lg:w-[40%] flex flex-col gap-5">
             <h1 className="text-4xl sm:text-5xl md:text-6xl leading-tight md:leading-14">
               ABOUT ME
             </h1>
@@ -81,6 +83,12 @@ const AboutMePage = () => {
               Clean code, thoughtful UI and solid architecture are what I care
               about.
             </p>
+            <div className="absolute opacity-60">
+              <Gradient />
+            </div>
+            <div className="absolute right-100 opacity-60">
+              <Gradient />
+            </div>
           </div>
 
           <div className="mack-visual-code h-[500px] sm:h-[550px]  mr-10 md:h-[600px] lg:h-[70%] w-full lg:w-[40%] border border-[var(--low-opacity-color)] rounded overflow-hidden">

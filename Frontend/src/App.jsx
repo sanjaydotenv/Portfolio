@@ -29,7 +29,7 @@ const App = () => {
 
 
   return (
-    <main className="min-h-screen w-full overflow-x-hidden bg-[var(--main-bg)] text-[var(--secondary-color)]">
+    <main className="min-h-screen w-full overflow-hidden bg-[var(--main-bg)] text-[var(--secondary-color)]">
 
       <Navbar />
 
