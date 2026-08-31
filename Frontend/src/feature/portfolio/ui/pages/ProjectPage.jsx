@@ -100,16 +100,16 @@ const ProjectPage = () => {
       </div>
 
       {/* PROJECT 3 */}
-      <div className="project-container sticky top-0 h-[70vh] w-[80%] bg-[#3A0CA3] rounded-lg overflow-hidden">
-        <div className="work-top h-20 w-full bg-[#FFF275] rounded-b-xl">
-          <h1 className="text-[#3A0CA3] text-3xl font-semibold flex items-center h-full px-5">
+      <div className="project-container sticky top-0 h-[70vh] w-[80%] bg-[var(--main-bg)] rounded-lg overflow-hidden">
+        <div className="work-top h-20 w-full bg-[var(--secondary-color)] rounded-b-xl">
+          <h1 className="text-[var(--main-bg)] text-3xl font-semibold flex items-center h-full px-5">
             Project 3
           </h1>
         </div>
 
         <div className="work-main h-[calc(100%-5rem)] w-full flex items-center relative justify-center">
           <div className="img h-[90%] w-[95%] rounded-xl overflow-hidden">
-            <div className="worl-design h-15 w-230 bg-[#3A0CA3] absolute right-0 top-[-50px] rounded-tl-[120px]"></div>
+            <div className="worl-design h-15 w-230 bg-[var(--main-bg)] absolute right-0 top-[-50px] rounded-tl-[120px]"></div>
             <img
               className="
     h-full w-full object-cover rounded-xl

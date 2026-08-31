@@ -96,11 +96,11 @@ const Navbar = () => {
           <div className="line h-10 w-[1px] bg-white"></div>
 
           <div className="content font-semibold">
-            <h2 className="text-lg leading-4 tracking-[.1rem] sm:text-2xl">
+            <h2 className="text-sm leading-4 tracking-[.1rem] sm:text-xl">
               Crafted
             </h2>
 
-            <h1 className="text-2xl tracking-tighter sm:text-3xl">
+            <h1 className="text-xl tracking-tighter sm:text-2xl">
               by <i className="text-[var(--primary-color)]">Sanjay</i>
             </h1>
           </div>
