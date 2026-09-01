@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useRef } from "react";
 import Gradient1 from "../components/Gradient1";
 import CtaDesign from "../components/CtaDesign";
 import Arrow from "../components/Arrow";
 import Marque from "../components/Marque";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 const HomePage = () => {
+  gsap.registerPlugin(useGSAP);
+
+  const headingRef = useRef(null);
+  const secHeadingRef = useRef(null);
+
+
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      defaults: {
+        ease: "expo.out",
+      },
+    });
+
+    tl.from(headingRef.current, {
+      y: 120,
+      opacity: 0,
+      duration: 2,
+    }).from(
+      secHeadingRef.current,
+      {
+        y: 80,
+        opacity: 0,
+        duration: 2,
+      },
+      "-=1.4",
+    );
+  });
+
   return (
     <div className="relative h-screen min-h-[600px] w-full overflow-hidden pt-20">
       {/* Gradients */}
@@ -22,28 +52,37 @@ const HomePage = () => {
           md:px-8
         "
       >
-        <div id="hero-top" className="flex flex-col items-center">
-          <h1
-            className="
+        <div
+          id="hero-top"
+          className="flex flex-col overflow-hidden items-center"
+        >
+          <div className="wrappe overflow-hidden h-19">
+            <h1
+              ref={headingRef}
+              className="
               text-[2.7rem] leading-[0.95]
               sm:text-[3.8rem]
               md:text-[4.7rem]
               lg:text-[5.5rem] lg:leading-16
             "
-          >
-            Build Better. Ship Faster.
-          </h1>
+            >
+              Build Better. Ship Faster.
+            </h1>
+          </div>
 
-          <h1
-            className="
+          <div className="wrapper overflow-hidden h-22">
+            <h1
+              ref={secHeadingRef}
+              className="
               text-[2.7rem] leading-[1]
               sm:text-[3.8rem]
               md:text-[4.7rem]
               lg:text-[5.5rem]
             "
-          >
-            Grow Smarter.
-          </h1>
+            >
+              Grow Smarter.
+            </h1>
+          </div>
         </div>
 
         <div
@@ -109,7 +148,6 @@ const HomePage = () => {
         </div>
       </div>
       <Marque />
-
     </div>
   );
 };
