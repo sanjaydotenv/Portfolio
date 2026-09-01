@@ -2,8 +2,12 @@ import React from "react";
 import universe from "../../../../assets/universe.svg";
 import Arrow from "../components/Arrow";
 import ContactForm from "./ContactForm";
+import { useAnimation } from "../../hooks/useAnimatioHook";
 
 const ContactPage = () => {
+
+  const {heroLetsBtnEnter , heroLetsBtnLeave} = useAnimation()
+
   return (
     <div className="h-[280vh] w-full py-20 px-40 overflow-hidden ">
       <div className="contact-top h-[25%] flex justify-between gap-80">
@@ -27,7 +31,11 @@ const ContactPage = () => {
             Have an idea, project or opportunity? i’d love to hear about it.
           </p>
 
-          <button className="bg-[var(--primary-color)] w-65  text-xl font-semibold rounded flex items-center gap-2 py-3 px-5 ">
+          <button
+            onMouseEnter={heroLetsBtnEnter}
+            onMouseLeave={heroLetsBtnLeave}
+            className="border border-[var(--low-opacity-color)] w-50  text-sm font-semibold rounded flex items-center gap-2 py-3 px-5 "
+          >
             Start a Conversation{" "}
             <span className="mt-1">
               <Arrow />
@@ -45,7 +53,6 @@ const ContactPage = () => {
       <div className="contact-form">
         <ContactForm />
       </div>
-
     </div>
   );
 };

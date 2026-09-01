@@ -1,146 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import logo from "../../../../assets/logo.png";
 import Arrow from "./Arrow";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(useGSAP);
+import { useAnimation } from "../../hooks/useAnimatioHook";
 
 const Navbar = () => {
+  const {
+    activeSection,
+    showNavbar,
+    handleNavClick,
+    handleMouseEnter,
+    handleMouseLeave,
+    handleContactBtnEnter,
+    handleContactBtnLeave,
+  } = useAnimation();
+
   const navlinks = [
     { name: "Home", id: "home" },
     { name: "About Me", id: "about-me" },
     { name: "Work", id: "work" },
     { name: "Contact", id: "contact" },
   ];
-
-  const [activeSection, setActiveSection] = useState("home");
-  const [showNavbar, setShowNavbar] = useState(true);
-
-  useEffect(() => {
-    const sections = document.querySelectorAll("section[id]");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleSections = entries.filter((entry) => entry.isIntersecting);
-
-        if (visibleSections.length > 0) {
-          const mostVisible = visibleSections.reduce((prev, current) =>
-            current.intersectionRatio > prev.intersectionRatio ? current : prev,
-          );
-
-          setActiveSection(mostVisible.target.id);
-        }
-      },
-      {
-        threshold: [0.3, 0.5, 0.7],
-      },
-    );
-
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    const dots = document.querySelectorAll(".nav-dot");
-
-    dots.forEach((dot) => {
-      gsap.killTweensOf(dot);
-      gsap.set(dot, {
-        clearProps: "backgroundColor,transform",
-      });
-    });
-  }, [activeSection]);
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY <= 80) {
-        setShowNavbar(true);
-      } else if (currentScrollY > lastScrollY) {
-        setShowNavbar(false);
-      } else if (currentScrollY < lastScrollY) {
-        setShowNavbar(true);
-      }
-
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll, {
-      passive: true,
-    });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const handleNavClick = (id) => {
-    setActiveSection(id);
-
-    const section = document.getElementById(id);
-
-    if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
-
-  const handleMouseEnter = (e) => {
-    const button = e.currentTarget;
-    const dot = button.querySelector(".nav-dot");
-
-    gsap.to(button, {
-      y: -5,
-      scale: 1.05,
-      duration: 0.2,
-      ease: "power2.out",
-      overwrite: "auto",
-    });
-
-    gsap.to(dot, {
-      backgroundColor: "var(--primary-color)",
-      scale: 1.3,
-      duration: 0.2,
-      ease: "power2.out",
-      overwrite: "auto",
-    });
-  };
-
-  const handleMouseLeave = (e) => {
-    const button = e.currentTarget;
-    const dot = button.querySelector(".nav-dot");
-
-    const isActive = button.dataset.active === "true";
-
-    gsap.to(button, {
-      y: 0,
-      scale: 1,
-      duration: 0.2,
-      ease: "power2.out",
-      overwrite: "auto",
-    });
-
-    gsap.to(dot, {
-      backgroundColor: isActive
-        ? "var(--primary-color)"
-        : "var(--low-opacity-color)",
-      scale: 1,
-      duration: 0.2,
-      ease: "power2.out",
-      overwrite: "auto",
-    });
-  };
 
   return (
     <nav
@@ -168,6 +47,9 @@ const Navbar = () => {
           lg:px-10
         "
       >
+        {/* =========================
+            LOGO
+        ========================= */}
         <div className="left flex h-20 w-auto shrink-0 items-center gap-2">
           <img
             className="w-10 object-contain sm:w-12"
@@ -188,6 +70,9 @@ const Navbar = () => {
           </div>
         </div>
 
+        {/* =========================
+            NAVIGATION
+        ========================= */}
         <div className="center hidden md:block">
           <div
             className="
@@ -243,7 +128,20 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="right shrink-0 rounded-full border">
+        {/* =========================
+            CONTACT BUTTON
+        ========================= */}
+        <div
+          onMouseEnter={handleContactBtnEnter}
+          onMouseLeave={handleContactBtnLeave}
+          className="
+            right
+            shrink-0
+            overflow-hidden
+            rounded-full
+            border
+          "
+        >
           <button
             onClick={() => handleNavClick("contact")}
             className="

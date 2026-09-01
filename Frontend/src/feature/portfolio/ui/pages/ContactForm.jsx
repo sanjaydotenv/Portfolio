@@ -8,6 +8,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
 import Marque from "../components/Marque";
 import Footer from "../components/Footer";
+import { useAnimation } from "../../hooks/useAnimatioHook";
 
 const ContactForm = () => {
   const SocialMediaHandles = [
@@ -70,6 +71,8 @@ const ContactForm = () => {
       window.open("https://x.com/mayurbairagi01", "_blank");
     }
   };
+
+  const { contactFormHandles } = useAnimation();
 
   return (
     <div className="w-full">
@@ -135,7 +138,7 @@ const ContactForm = () => {
             <div className="form-contact-bottom flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-start sm:items-center mt-2">
               <button
                 type="button"
-                className="flex gap-3 ml-0 sm:ml-2 items-center bg-[var(--primary-color)] px-4 sm:px-5 py-3 rounded-sm text-base sm:text-xl"
+                className="flex gap-3 ml-0 sm:ml-2 items-center bg-[var(--primary-color)] hover:bg-[#ea641c] hover:scale-105 animation duration-150 px-4 sm:px-5 py-3 rounded-sm text-base sm:text-xl"
               >
                 Send Message
                 <span className="mt-[6px]">
@@ -166,7 +169,7 @@ const ContactForm = () => {
                     <div
                       key={item.label}
                       onClick={() => watchClick(item.label)}
-                      className="w-full min-w-0 flex bg-[#48434351] cursor-pointer rounded-lg p-2 sm:px-4 h-[70px] sm:h-[75px] items-center hover:bg-[#48434370] transition"
+                      className=" w-full min-w-0 flex bg-[#48434351] cursor-pointer rounded-lg p-2 sm:px-4 h-[70px] sm:h-[75px] items-center hover:bg-[#48434370] transition"
                     >
                       <div className="wrapper flex gap-3 sm:gap-4 h-full w-full min-w-0 items-center">
                         <div className="icon bg-[#00000055] shrink-0 flex items-center justify-center h-[90%] w-11 sm:w-14 border border-[var(--primary-color)] rounded-lg text-xl sm:text-2xl">
