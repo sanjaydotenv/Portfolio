@@ -2,15 +2,16 @@ import React from "react";
 import Arrow from "../components/Arrow";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { VscMail } from "react-icons/vsc";
-import { FaGithub } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
 import Marque from "../components/Marque";
 import Footer from "../components/Footer";
-import { useAnimation } from "../../hooks/useAnimatioHook";
+import { useHandleForm } from "../../hooks/useFormHook";
 
 const ContactForm = () => {
+  const { formHandler, changeHandler } = useHandleForm();
+
   const SocialMediaHandles = [
     {
       icon: <VscMail />,
@@ -27,7 +28,7 @@ const ContactForm = () => {
     {
       icon: <FaLinkedin />,
       label: "LINKEDIN",
-      handle: "likedin.com/in/sanjay",
+      handle: "linkedin.com/in/sanjay",
       arrow: <Arrow />,
     },
     {
@@ -40,19 +41,19 @@ const ContactForm = () => {
 
   const AVAILABLE = [
     {
-      checkIcon: <FaCheck size={15} color="#fc6c26" />,
+      checkIcon: <FaCheck size={13} color="#fc6c26" />,
       label: "Freelance Projects",
     },
     {
-      checkIcon: <FaCheck size={15} color="#fc6c26" />,
+      checkIcon: <FaCheck size={13} color="#fc6c26" />,
       label: "Collaborations",
     },
     {
-      checkIcon: <FaCheck size={15} color="#fc6c26" />,
+      checkIcon: <FaCheck size={13} color="#fc6c26" />,
       label: "Full-time Opportunities",
     },
     {
-      checkIcon: <FaCheck size={15} color="#fc6c26" />,
+      checkIcon: <FaCheck size={13} color="#fc6c26" />,
       label: "The Developer",
     },
   ];
@@ -72,163 +73,456 @@ const ContactForm = () => {
     }
   };
 
-  const { contactFormHandles } = useAnimation();
-
   return (
     <div className="w-full">
-      {/* CONTACT CONTENT */}
-      <div className="w-full flex flex-col lg:flex-row gap-4 sm:gap-5">
+
+      {/* ================================================= */}
+      {/* CONTACT GRID */}
+      {/* ================================================= */}
+
+      <div
+        className="
+          flex w-full
+          flex-col
+          gap-4
+          sm:gap-5
+          lg:flex-row
+          lg:items-stretch
+        "
+      >
+
+        {/* ================================================= */}
         {/* LEFT - FORM */}
-        <div className="contact-left min-h-[700px] lg:min-h-[100vh] w-full lg:w-[65%] border rounded-2xl border-[var(--primary-color)] relative">
-          <div className="form p-4 sm:p-5 lg:p-6">
-            <h1 className="flex items-center gap-3 text-xl sm:text-2xl font-semibold">
-              <span className="h-2 w-2 shrink-0 bg-[var(--primary-color)] block rounded-full"></span>
+        {/* ================================================= */}
+
+        <div
+          className="
+            contact-left
+            w-full
+            rounded-2xl
+            border border-[var(--primary-color)]
+            lg:w-[62%]
+          "
+        >
+          <div
+            className="
+              p-4
+              sm:p-5
+              md:p-6
+              lg:p-7
+              xl:p-8
+            "
+          >
+
+            {/* FORM TITLE */}
+            <h1
+              className="
+                flex items-center gap-3
+                text-lg font-semibold
+                sm:text-xl
+                md:text-2xl
+              "
+            >
+              <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--primary-color)]" />
               SEND A MESSAGE
             </h1>
 
-            <form className="py-5 px-0 sm:px-2 flex flex-col gap-6 sm:gap-8">
-              <div className="input-group flex flex-col gap-2">
-                <label className="text-[var(--low-opacity-color)]">
+            {/* FORM */}
+            <form
+              onSubmit={formHandler}
+              className="
+                mt-7
+                flex flex-col
+                gap-5
+                sm:mt-8
+                sm:gap-7
+                md:gap-8
+              "
+            >
+
+              {/* NAME */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm text-[var(--low-opacity-color)]">
                   Your Name
                 </label>
 
                 <input
-                  className="border w-full px-3 py-3 rounded border-[var(--low-opacity-color)] outline-none focus:border-[var(--primary-color)] transition"
+                  name="name"
+                  onInput={changeHandler}
+                  className="
+                    w-full
+                    rounded
+                    border
+                    border-[var(--low-opacity-color)]
+                    bg-transparent
+                    px-3 py-3
+                    text-sm
+                    outline-none
+                    transition
+                    focus:border-[var(--primary-color)]
+                    sm:text-base
+                  "
                   type="text"
                   placeholder="Enter Your Name"
                 />
               </div>
 
-              <div className="input-group flex flex-col gap-2">
-                <label className="text-[var(--low-opacity-color)]">
+              {/* EMAIL */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm text-[var(--low-opacity-color)]">
                   Your Email
                 </label>
 
                 <input
-                  className="border w-full px-3 py-3 rounded border-[var(--low-opacity-color)] outline-none focus:border-[var(--primary-color)] transition"
-                  type="text"
+                  name="email"
+                  onInput={changeHandler}
+                  className="
+                    w-full
+                    rounded
+                    border
+                    border-[var(--low-opacity-color)]
+                    bg-transparent
+                    px-3 py-3
+                    text-sm
+                    outline-none
+                    transition
+                    focus:border-[var(--primary-color)]
+                    sm:text-base
+                  "
+                  type="email"
                   placeholder="Enter Your Email"
                 />
               </div>
 
-              <div className="input-group flex flex-col gap-2">
-                <label className="text-[var(--low-opacity-color)]">
+              {/* ABOUT */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm text-[var(--low-opacity-color)]">
                   What's this about?
                 </label>
 
                 <input
-                  className="border w-full px-3 py-3 rounded border-[var(--low-opacity-color)] outline-none focus:border-[var(--primary-color)] transition"
+                  name="aboutyou"
+                  onInput={changeHandler}
+                  className="
+                    w-full
+                    rounded
+                    border
+                    border-[var(--low-opacity-color)]
+                    bg-transparent
+                    px-3 py-3
+                    text-sm
+                    outline-none
+                    transition
+                    focus:border-[var(--primary-color)]
+                    sm:text-base
+                  "
                   type="text"
                   placeholder="What's this about?"
                 />
               </div>
 
-              <div className="input-group flex flex-col gap-2">
-                <label className="text-[var(--low-opacity-color)]">
+              {/* MESSAGE */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm text-[var(--low-opacity-color)]">
                   Tell me about your project
                 </label>
 
                 <textarea
-                  className="border w-full px-3 py-3 rounded border-[var(--low-opacity-color)] h-36 sm:h-40 resize-none outline-none focus:border-[var(--primary-color)] transition"
+                  name="aboutYourProject"
+                  onInput={changeHandler}
+                  className="
+                    h-32
+                    w-full
+                    resize-none
+                    rounded
+                    border
+                    border-[var(--low-opacity-color)]
+                    bg-transparent
+                    px-3 py-3
+                    text-sm
+                    outline-none
+                    transition
+                    focus:border-[var(--primary-color)]
+                    sm:h-40
+                    sm:text-base
+                  "
                   placeholder="Write your message here..."
                 />
               </div>
-            </form>
 
-            <div className="form-contact-bottom flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-start sm:items-center mt-2">
-              <button
-                type="button"
-                className="flex gap-3 ml-0 sm:ml-2 items-center bg-[var(--primary-color)] hover:bg-[#ea641c] hover:scale-105 animation duration-150 px-4 sm:px-5 py-3 rounded-sm text-base sm:text-xl"
+              {/* BOTTOM */}
+              <div
+                className="
+                  mt-1
+                  flex
+                  flex-col
+                  gap-4
+                  sm:flex-row
+                  sm:items-center
+                  sm:justify-between
+                "
               >
-                Send Message
-                <span className="mt-[6px]">
-                  <Arrow />
-                </span>
-              </button>
 
-              <p className="text-[var(--low-opacity-color)] flex items-center gap-2 text-[10px] sm:text-xs">
-                <MdOutlineWatchLater />I usually reply within 24 hours
-              </p>
-            </div>
+                <button
+                  type="submit"
+                  className="
+                    flex w-fit
+                    items-center gap-3
+                    rounded-sm
+                    bg-[var(--primary-color)]
+                    px-4 py-3
+                    text-sm
+                    transition-all duration-200
+                    hover:scale-105
+                    sm:px-5
+                    sm:text-base
+                  "
+                >
+                  Send Message
+
+                  <span className="mt-1 rotate-[-45deg]">
+                    <Arrow />
+                  </span>
+                </button>
+
+                <p
+                  className="
+                    flex items-center gap-2
+                    text-[10px]
+                    text-[var(--low-opacity-color)]
+                    sm:text-xs
+                  "
+                >
+                  <MdOutlineWatchLater />
+                  I usually reply within 24 hours
+                </p>
+
+              </div>
+            </form>
           </div>
         </div>
 
+        {/* ================================================= */}
         {/* RIGHT */}
-        <div className="contact-right w-full lg:w-[35%] min-h-[700px] lg:h-[100vh] flex flex-col gap-4">
-          {/* CONNECT DIRECTLY */}
-          <div className="contact-left-top min-h-[480px] lg:h-[70%] w-full border rounded-2xl border-[var(--primary-color)] p-4 sm:p-5 flex flex-col gap-5 sm:gap-6">
-            <h1 className="flex items-center gap-3 text-xl sm:text-2xl font-semibold">
-              <span className="h-2 w-2 shrink-0 bg-[var(--primary-color)] block rounded-full"></span>
+        {/* ================================================= */}
+
+        <div
+          className="
+            contact-right
+            flex w-full
+            flex-col
+            gap-4
+            sm:gap-5
+            lg:w-[38%]
+          "
+        >
+
+          {/* ================= CONNECT ================= */}
+
+          <div
+            className="
+              flex
+              w-full
+              flex-col
+              rounded-2xl
+              border border-[var(--primary-color)]
+              p-4
+              sm:p-5
+              md:p-6
+            "
+          >
+
+            <h1
+              className="
+                flex items-center gap-3
+                text-lg font-semibold
+                sm:text-xl
+                md:text-2xl
+              "
+            >
+              <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--primary-color)]" />
               CONNECT DIRECTLY
             </h1>
 
-            <div className="contact-right-top-icons w-full">
-              <div className="gap-4 sm:gap-5 w-full rounded-lg px-0 sm:px-2 flex flex-col">
-                {SocialMediaHandles.map((item) => {
-                  return (
+            <div className="mt-6 flex flex-col gap-3 sm:gap-4">
+
+              {SocialMediaHandles.map((item) => (
+                <div
+                  key={item.label}
+                  onClick={() => watchClick(item.label)}
+                  className="
+                    flex
+                    min-h-[68px]
+                    w-full
+                    cursor-pointer
+                    items-center
+                    rounded-lg
+                    bg-[#48434351]
+                    p-2
+                    transition
+                    hover:bg-[#48434370]
+                    sm:min-h-[74px]
+                    sm:px-3
+                    md:px-4
+                  "
+                >
+
+                  <div
+                    className="
+                      flex
+                      min-w-0
+                      flex-1
+                      items-center
+                      gap-3
+                      sm:gap-4
+                    "
+                  >
+
+                    {/* ICON */}
                     <div
-                      key={item.label}
-                      onClick={() => watchClick(item.label)}
-                      className=" w-full min-w-0 flex bg-[#48434351] cursor-pointer rounded-lg p-2 sm:px-4 h-[70px] sm:h-[75px] items-center hover:bg-[#48434370] transition"
+                      className="
+                        flex
+                        h-12 w-12
+                        shrink-0
+                        items-center
+                        justify-center
+                        rounded-lg
+                        border border-[var(--primary-color)]
+                        bg-[#00000055]
+                        text-xl
+                        sm:h-14 sm:w-14
+                        sm:text-2xl
+                      "
                     >
-                      <div className="wrapper flex gap-3 sm:gap-4 h-full w-full min-w-0 items-center">
-                        <div className="icon bg-[#00000055] shrink-0 flex items-center justify-center h-[90%] w-11 sm:w-14 border border-[var(--primary-color)] rounded-lg text-xl sm:text-2xl">
-                          {item.icon}
-                        </div>
-
-                        <div className="content min-w-0 flex-1">
-                          <h1 className="text-sm sm:text-base font-medium">
-                            {item.label}
-                          </h1>
-
-                          <p className="text-xs sm:text-sm text-[var(--low-opacity-color)] truncate">
-                            {item.handle}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="icon shrink-0 ml-2 text-xl sm:text-2xl rotate-[-45deg] text-[var(--primary-color)]">
-                        {item.arrow}
-                      </div>
+                      {item.icon}
                     </div>
-                  );
-                })}
-              </div>
+
+                    {/* CONTENT */}
+                    <div className="min-w-0 flex-1">
+                      <h1 className="text-sm font-medium sm:text-base">
+                        {item.label}
+                      </h1>
+
+                      <p
+                        className="
+                          mt-0.5
+                          truncate
+                          text-[11px]
+                          text-[var(--low-opacity-color)]
+                          sm:text-xs
+                          md:text-sm
+                        "
+                      >
+                        {item.handle}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* ARROW */}
+                  <div
+                    className="
+                      ml-2
+                      shrink-0
+                      rotate-[-45deg]
+                      text-lg
+                      text-[var(--primary-color)]
+                      sm:text-xl
+                    "
+                  >
+                    {item.arrow}
+                  </div>
+
+                </div>
+              ))}
+
             </div>
           </div>
 
-          {/* CURRENTLY AVAILABLE */}
-          <div className="contact-left-bottom flex flex-col gap-4 min-h-[220px] lg:h-[30%] w-full border border-[var(--primary-color)] rounded-2xl p-4 sm:p-5">
-            <h1 className="flex items-center gap-2 text-sm sm:text-base font-semibold">
-              <span className="h-2 w-2 shrink-0 bg-[var(--primary-color)] block rounded-full"></span>
+          {/* ================= AVAILABLE ================= */}
+
+          <div
+            className="
+              flex
+              w-full
+              flex-col
+              rounded-2xl
+              border border-[var(--primary-color)]
+              p-4
+              sm:p-5
+              md:p-6
+            "
+          >
+
+            <h1
+              className="
+                flex items-center gap-2
+                text-sm font-semibold
+                sm:text-base
+              "
+            >
+              <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--primary-color)]" />
               CURRENTLY AVAILABLE
             </h1>
 
-            <div className="items flex flex-col gap-3">
-              {AVAILABLE.map((item) => {
-                return (
-                  <div key={item.label} className="flex gap-2 items-center">
-                    <div className="circle shrink-0 border flex items-center justify-center border-[var(--primary-color)] rounded-full w-6 h-6">
-                      {item.checkIcon}
-                    </div>
+            <div className="mt-5 flex flex-col gap-3">
 
-                    <div className="label text-sm sm:text-base">
-                      <i>{item.label}</i>
-                    </div>
+              {AVAILABLE.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-center gap-3"
+                >
+
+                  <div
+                    className="
+                      flex
+                      h-6 w-6
+                      shrink-0
+                      items-center
+                      justify-center
+                      rounded-full
+                      border
+                      border-[var(--primary-color)]
+                    "
+                  >
+                    {item.checkIcon}
                   </div>
-                );
-              })}
+
+                  <div className="text-sm sm:text-base">
+                    <i>{item.label}</i>
+                  </div>
+
+                </div>
+              ))}
+
             </div>
           </div>
+
         </div>
       </div>
 
-      {/* MARQUEE - FULL WIDTH BELOW CONTACT */}
-      <div className="relative left-1/2 -translate-x-1/2 w-screen mt-30 overflow-hidden">
+      {/* ================================================= */}
+      {/* MARQUEE */}
+      {/* ================================================= */}
+
+      <div
+        className="
+          relative
+          left-1/2
+          mt-20
+          w-screen
+          -translate-x-1/2
+          overflow-hidden
+          sm:mt-24
+          md:mt-28
+          lg:mt-32
+        "
+      >
         <Marque />
       </div>
 
+      {/* FOOTER */}
       <Footer />
+
     </div>
   );
 };

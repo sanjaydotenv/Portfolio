@@ -52,7 +52,6 @@ const HomePage = () => {
 
   return (
     <div className="relative h-screen min-h-[600px] w-full overflow-hidden pt-20">
-  
       <div
         className={`
           absolute inset-0 z-0 overflow-hidden
@@ -80,14 +79,15 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      <div className="relative z-[1]">
+      <div className="pointer-events-none absolute inset-0 z-[1]">
         <Gradient1 />
       </div>
 
-      <div className="absolute right-0 top-0 z-[1]">
-        <Gradient1 />
+      <div className="pointer-events-none absolute inset-0 z-[1]">
+        <div className="absolute right-0 top-0 scale-x-[-1]">
+          <Gradient1 />
+        </div>
       </div>
-
 
       <div
         className="
@@ -99,7 +99,6 @@ const HomePage = () => {
           md:px-8
         "
       >
-     
         <div
           id="hero-top"
           className="flex flex-col items-center overflow-hidden"
@@ -151,12 +150,9 @@ const HomePage = () => {
             building modern, scalable
           </h1>
 
-          <h1>
-            and thoughtful web experiences from frontend to backend
-          </h1>
+          <h1>and thoughtful web experiences from frontend to backend</h1>
         </div>
 
-        
         <div
           id="hero-bottom"
           className="
@@ -165,8 +161,6 @@ const HomePage = () => {
             md:gap-10
           "
         >
-         
-
           <button
             onClick={() => handleNavClick("work")}
             onMouseEnter={heroBtnAniEnter}
@@ -182,12 +176,10 @@ const HomePage = () => {
             "
           >
             View My Work
-
             <span className="rotate-[-45deg]">
               <Arrow />
             </span>
           </button>
-
 
           <button
             onClick={() => handleNavClick("contact")}
@@ -205,7 +197,6 @@ const HomePage = () => {
             "
           >
             Let's Talk
-
             <span className="rotate-[-45deg]">
               <Arrow />
             </span>
@@ -228,26 +219,17 @@ const HomePage = () => {
             hover:bg-white/10
           "
         >
-
           <span
             className={`
               h-2 w-2 rounded-full
               transition-all duration-300
-              ${
-                cameraOpen
-                  ? "animate-pulse bg-red-500"
-                  : "bg-white/40"
-              }
+              ${cameraOpen ? "animate-pulse bg-red-500" : "bg-white/40"}
             `}
           />
 
-
-          <span>
-            {cameraOpen ? "Camera On" : "Enable Camera"}
-          </span>
+          <span>{cameraOpen ? "Camera On" : "Enable Camera"}</span>
         </button>
       </div>
-
 
       <div className="relative z-10">
         <Marque />
