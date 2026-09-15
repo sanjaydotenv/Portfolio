@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Marque from "../components/Marque";
-import Gradient from "../components/Gradient1"
+import Gradient from "../components/Gradient1";
 import Gradient1 from "../components/Gradient1";
+import AboutMeSkillsPage from "./AboutMeSkillsPage";
 
 const AboutMePage = () => {
   const toggleBtn = [
@@ -42,7 +43,6 @@ const AboutMePage = () => {
 
   return (
     <div className="min-h-screen w-full ">
-        
       <div className="aboutme-top h-40  sm:h-48 md:h-60 w-full flex items-center justify-center px-4">
         <div className="toggle border w-fit rounded-full">
           {toggleBtn.map((btn) => (
@@ -58,7 +58,6 @@ const AboutMePage = () => {
           ))}
         </div>
       </div>
-
 
       {activeBtn === "me" && (
         <div className="aboutme-hero  min-h-[calc(100vh-10rem)] sm:min-h-[calc(100vh-12rem)] md:min-h-[calc(100vh-15rem)] w-full px-5 sm:px-8 md:px-12 lg:px-20 xl:px-30 pb-10 flex flex-col lg:flex-row gap-12 lg:gap-8 xl:gap-16 justify-start lg:justify-between">
@@ -207,7 +206,7 @@ const AboutMePage = () => {
         </div>
       )}
 
-      {activeBtn === "skills" && <h1>skills</h1>}
+      {activeBtn === "skills" && <h1><AboutMeSkillsPage /></h1>}
 
       <Marque />
     </div>
