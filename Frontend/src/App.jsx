@@ -38,13 +38,13 @@ const App = () => {
           <HomePage />
         </section>
 
-        <section id="about-me" className="scroll-mt-20">
-          <AboutMePage />
-        </section>
+       <section id="about-me">
+  <AboutMePage />
+</section>
 
-        <section id="work" className="scroll-mt-20">
-          <ProjectPage />
-        </section>
+<section id="work">
+  <ProjectPage />
+</section>
 
         <section id="contact" className="scroll-mt-20">
           <ContactPage />

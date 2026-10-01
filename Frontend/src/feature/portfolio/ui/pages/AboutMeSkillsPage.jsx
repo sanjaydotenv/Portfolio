@@ -1,4 +1,5 @@
 import React from "react";
+
 import MongoDB from "../../../../../src/assets/MONGO DB.png";
 import Redis from "../../../../../src/assets/REDIS.png";
 import node from "../../../../../src/assets/NODE JS.png";
@@ -92,9 +93,9 @@ const AboutMeSkillsPage = () => {
 
       <div className="pointer-events-none absolute -bottom-40 -right-32 h-96 w-96 rounded-full bg-blue-600/20 blur-[130px]" />
 
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
 
-      {/* Small Grid Background */}
+      {/* Grid Background */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.04]"
         style={{
@@ -130,7 +131,7 @@ const AboutMeSkillsPage = () => {
             scalable and interactive web applications.
           </p>
 
-          {/* Decorative line */}
+          {/* Decorative Line */}
           <div className="mx-auto mt-8 flex w-fit items-center gap-3">
             <div className="h-px w-16 bg-gradient-to-r from-transparent to-cyan-400" />
 
@@ -142,8 +143,8 @@ const AboutMeSkillsPage = () => {
 
         {/* Skills Grid */}
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {skills.map((skill, index) => (
-            <div key={index} className="group relative">
+          {skills.map((skill) => (
+            <div key={skill.name} className="group relative">
               {/* Outer Glow */}
               <div
                 className="absolute -inset-[1px] rounded-2xl opacity-0 blur-md transition duration-500 group-hover:opacity-100"
@@ -179,7 +180,7 @@ const AboutMeSkillsPage = () => {
                   {skill.name}
                 </h3>
 
-                {/* Bottom Glow Line */}
+                {/* Bottom Glow */}
                 <div
                   className="relative z-10 mt-3 h-0.5 w-8 rounded-full opacity-40 transition-all duration-500 group-hover:w-14 group-hover:opacity-100"
                   style={{
@@ -189,7 +190,7 @@ const AboutMeSkillsPage = () => {
                 />
 
                 {/* Corner */}
-                <div className="absolute right-3 top-3 h-2 w-2 rounded-full bg-white/10 transition group-hover:bg-white/40" />
+                <div className="absolute right-3 top-3 h-2 w-2 rounded-full bg-white/10 transition group-hover:bg-green-400" />
               </div>
             </div>
           ))}
