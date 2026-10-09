@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 import MongoDB from "../../../../../src/assets/MONGO DB.png";
 import Redis from "../../../../../src/assets/REDIS.png";
@@ -13,195 +15,513 @@ import docker from "../../../../../src/assets/DOCKER.png";
 import css from "../../../../../src/assets/CSS.png";
 import Reactt from "../../../../../src/assets/REACT.png";
 
+import "./AboutMeSkillsPage.css";
+
 const skills = [
-  // Frontend
   {
     name: "HTML",
     icon: html,
-    glow: "rgba(249, 115, 22, 0.8)",
+    glow: "#f97316",
   },
   {
     name: "CSS",
     icon: css,
-    glow: "rgba(37, 99, 235, 0.8)",
+    glow: "#2563eb",
   },
   {
     name: "JavaScript",
     icon: javascript,
-    glow: "rgba(250, 204, 21, 0.8)",
+    glow: "#facc15",
   },
   {
     name: "TypeScript",
     icon: typescript,
-    glow: "rgba(49, 120, 198, 0.8)",
+    glow: "#3178c6",
   },
   {
     name: "Tailwind CSS",
     icon: tailwind,
-    glow: "rgba(6, 182, 212, 0.8)",
+    glow: "#06b6d4",
   },
-
-  // React Ecosystem
   {
     name: "React",
     icon: Reactt,
-    glow: "rgba(97, 218, 251, 0.8)",
+    glow: "#61dafb",
   },
   {
     name: "Redux",
     icon: redux,
-    glow: "rgba(118, 74, 188, 0.8)",
+    glow: "#764abc",
   },
-
-  // Backend
   {
     name: "Node.js",
     icon: node,
-    glow: "rgba(83, 158, 67, 0.8)",
+    glow: "#539e43",
   },
   {
     name: "Express.js",
     icon: express,
-    glow: "rgba(255, 255, 255, 0.65)",
+    glow: "#ffffff",
   },
-
-  // Database / Cache
   {
     name: "MongoDB",
     icon: MongoDB,
-    glow: "rgba(71, 162, 72, 0.8)",
+    glow: "#47a248",
   },
   {
     name: "Redis",
     icon: Redis,
-    glow: "rgba(220, 38, 38, 0.8)",
+    glow: "#dc2626",
   },
-
-  // DevOps
   {
     name: "Docker",
     icon: docker,
-    glow: "rgba(36, 150, 237, 0.8)",
+    glow: "#2496ed",
   },
 ];
 
 const AboutMeSkillsPage = () => {
+  const mountRef = useRef(null);
+  const tooltipRef = useRef(null);
+
+  useEffect(() => {
+    const mount = mountRef.current;
+
+    if (!mount) return;
+
+    let disposed = false;
+    let animationId;
+
+    // =====================================
+    // 1. SCENE
+    // =====================================
+
+    const scene = new THREE.Scene();
+
+    scene.background = new THREE.Color("#03040b");
+
+    // =====================================
+    // 2. CAMERA
+    // =====================================
+
+    const camera = new THREE.PerspectiveCamera(
+      65,
+      mount.clientWidth / mount.clientHeight,
+      0.1,
+      1000,
+    );
+
+    camera.position.set(0, 0, 38);
+
+    // =====================================
+    // 3. RENDERER
+    // =====================================
+
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: false,
+    });
+
+    renderer.setSize(mount.clientWidth, mount.clientHeight);
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    mount.appendChild(renderer.domElement);
+
+    // =====================================
+    // 4. MOUSE CONTROLS
+    // =====================================
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+    controls.enableRotate = true;
+    controls.enableZoom = true;
+    controls.enablePan = true;
+
+    controls.autoRotate = false;
+
+    controls.minDistance = 12;
+    controls.maxDistance = 100;
+
+    // =====================================
+    // 5. BACKGROUND STARS
+    // =====================================
+
+    const starGeometry = new THREE.BufferGeometry();
+
+    const starCount = 5000;
+
+    const starPositions = new Float32Array(starCount * 3);
+
+    for (let i = 0; i < starCount; i++) {
+      const index = i * 3;
+
+      starPositions[index] = (Math.random() - 0.5) * 180;
+
+      starPositions[index + 1] = (Math.random() - 0.5) * 120;
+
+      starPositions[index + 2] = (Math.random() - 0.5) * 100;
+    }
+
+    starGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(starPositions, 3),
+    );
+
+    const starMaterial = new THREE.PointsMaterial({
+      color: "#ffffff",
+      size: 0.12,
+      transparent: true,
+      opacity: 0.8,
+      sizeAttenuation: true,
+    });
+
+    const stars = new THREE.Points(starGeometry, starMaterial);
+
+    scene.add(stars);
+
+    // =====================================
+    // 6. CENTER ENERGY CORE
+    // =====================================
+
+    const coreGeometry = new THREE.SphereGeometry(1.4, 32, 32);
+
+    const coreMaterial = new THREE.MeshBasicMaterial({
+      color: "#6d28d9",
+      transparent: true,
+      opacity: 0.85,
+    });
+
+    const core = new THREE.Mesh(coreGeometry, coreMaterial);
+
+    scene.add(core);
+
+    const coreLight = new THREE.PointLight("#7c3aed", 25, 70);
+
+    coreLight.position.set(0, 0, 0);
+
+    scene.add(coreLight);
+
+    // =====================================
+    // 7. LOGO GROUP
+    // =====================================
+
+    const logoGroup = new THREE.Group();
+
+    scene.add(logoGroup);
+
+    const textureLoader = new THREE.TextureLoader();
+
+    const raycaster = new THREE.Raycaster();
+
+    const pointer = new THREE.Vector2();
+
+    const clickableLogos = [];
+
+    const animatedLogos = [];
+
+    let selectedLogo = null;
+
+    // =====================================
+    // 8. POSITION ALL 12 LOGOS
+    // =====================================
+
+    // Four columns and three rows.
+    // Small position changes give the layout
+    // a natural floating-universe appearance.
+
+    const columns = 4;
+    const spacingX = 8.5;
+    const spacingY = 7.5;
+
+    function getLogoPosition(index) {
+      const column = index % columns;
+
+      const row = Math.floor(index / columns);
+
+      const x =
+        (column - (columns - 1) / 2) * spacingX + (Math.random() - 0.5) * 1.2;
+
+      const y = (1 - row) * spacingY + (Math.random() - 0.5) * 1.2;
+
+      const z = (Math.random() - 0.5) * 5;
+
+      return new THREE.Vector3(x, y, z);
+    }
+
+    // =====================================
+    // 9. LOAD TECHNOLOGY LOGOS
+    // =====================================
+
+    skills.forEach((skill, index) => {
+      textureLoader.load(
+        skill.icon,
+
+        (texture) => {
+          if (disposed) {
+            texture.dispose();
+            return;
+          }
+
+          texture.colorSpace = THREE.SRGBColorSpace;
+
+          const position = getLogoPosition(index);
+
+          const size = 3.1;
+
+          // Main logo
+          const logoMaterial = new THREE.SpriteMaterial({
+            map: texture,
+            transparent: true,
+            depthWrite: false,
+          });
+
+          const logo = new THREE.Sprite(logoMaterial);
+
+          logo.position.copy(position);
+
+          logo.scale.set(size, size, 1);
+
+          logo.userData.name = skill.name;
+
+          logo.userData.glowColor = skill.glow;
+
+          logo.userData.originalScale = size;
+
+          logoGroup.add(logo);
+
+          clickableLogos.push(logo);
+
+          // Colored glow
+          const glowMaterial = new THREE.SpriteMaterial({
+            map: texture,
+            color: new THREE.Color(skill.glow),
+            transparent: true,
+            opacity: 0.42,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+          });
+
+          const glow = new THREE.Sprite(glowMaterial);
+
+          glow.position.copy(position);
+
+          glow.scale.set(size * 1.65, size * 1.65, 1);
+
+          logoGroup.add(glow);
+
+          logo.userData.glow = glow;
+
+          // Animation settings
+          animatedLogos.push({
+            object: logo,
+            originalPosition: position.clone(),
+            phase: Math.random() * Math.PI * 2,
+            speed: 0.3 + Math.random() * 0.3,
+            amplitude: 0.3 + Math.random() * 0.35,
+          });
+        },
+
+        undefined,
+
+        (error) => {
+          console.error(`Failed to load ${skill.name} logo:`, error);
+        },
+      );
+    });
+
+    // =====================================
+    // 10. CLICK LOGO TO SHOW ITS NAME
+    // =====================================
+
+    function handleLogoClick(event) {
+      const rect = renderer.domElement.getBoundingClientRect();
+
+      pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+
+      pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(pointer, camera);
+
+      const intersections = raycaster.intersectObjects(clickableLogos, false);
+
+      if (intersections.length > 0) {
+        selectedLogo = intersections[0].object;
+
+        if (tooltipRef.current) {
+          tooltipRef.current.textContent = selectedLogo.userData.name;
+
+          tooltipRef.current.style.opacity = "1";
+        }
+      } else {
+        selectedLogo = null;
+
+        if (tooltipRef.current) {
+          tooltipRef.current.style.opacity = "0";
+        }
+      }
+    }
+
+    renderer.domElement.addEventListener("click", handleLogoClick);
+
+    // =====================================
+    // 11. ANIMATION
+    // =====================================
+
+    const clock = new THREE.Clock();
+
+    function animate() {
+      if (disposed) return;
+
+      animationId = requestAnimationFrame(animate);
+
+      const elapsedTime = clock.getElapsedTime();
+
+      // Starfield movement
+      stars.rotation.y = elapsedTime * 0.006;
+
+      stars.rotation.x = Math.sin(elapsedTime * 0.08) * 0.02;
+
+      // Center core movement
+      core.rotation.y = elapsedTime * 0.3;
+
+      const coreScale = 1.4 + Math.sin(elapsedTime * 1.5) * 0.08;
+
+      core.scale.setScalar(coreScale);
+
+      // Logo floating animation
+      animatedLogos.forEach((item) => {
+        const { object, originalPosition, phase, speed, amplitude } = item;
+
+        object.position.y =
+          originalPosition.y +
+          Math.sin(elapsedTime * speed + phase) * amplitude;
+
+        object.position.x =
+          originalPosition.x +
+          Math.cos(elapsedTime * speed * 0.5 + phase) * amplitude * 0.3;
+
+        const originalSize = object.userData.originalScale;
+
+        const targetSize =
+          object === selectedLogo ? originalSize * 1.25 : originalSize;
+
+        const currentSize = THREE.MathUtils.lerp(
+          object.scale.x,
+          targetSize,
+          0.1,
+        );
+
+        object.scale.set(currentSize, currentSize, 1);
+
+        // Glow follows the logo
+        const glow = object.userData.glow;
+
+        if (glow) {
+          glow.position.copy(object.position);
+
+          const pulse = 1.6 + Math.sin(elapsedTime * 2 + phase) * 0.12;
+
+          glow.scale.set(currentSize * pulse, currentSize * pulse, 1);
+
+          glow.material.opacity =
+            0.3 + (Math.sin(elapsedTime * 2 + phase) + 1) * 0.1;
+        }
+      });
+
+      controls.update();
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // =====================================
+    // 12. RESPONSIVE RESIZE
+    // =====================================
+
+    function handleResize() {
+      const width = mount.clientWidth;
+
+      const height = mount.clientHeight;
+
+      camera.aspect = width / height;
+
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(width, height);
+
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    // =====================================
+    // 13. CLEANUP
+    // =====================================
+
+    return () => {
+      disposed = true;
+
+      cancelAnimationFrame(animationId);
+
+      window.removeEventListener("resize", handleResize);
+
+      renderer.domElement.removeEventListener("click", handleLogoClick);
+
+      controls.dispose();
+
+      scene.traverse((object) => {
+        if (object.geometry) {
+          object.geometry.dispose();
+        }
+
+        if (object.material) {
+          const materials = Array.isArray(object.material)
+            ? object.material
+            : [object.material];
+
+          materials.forEach((material) => {
+            if (material.map) {
+              material.map.dispose();
+            }
+
+            material.dispose();
+          });
+        }
+      });
+
+      renderer.dispose();
+
+      if (renderer.domElement.parentNode === mount) {
+        mount.removeChild(renderer.domElement);
+      }
+    };
+  }, []);
+
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#050816] px-6 py-20 text-white md:px-12 lg:px-20">
-      {/* Background Glow */}
-      <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-purple-600/20 blur-[130px]" />
+    <section className="coding-universe">
+      {" "}
+      <div ref={mountRef} className="coding-universe-canvas" />
+      <div className="universe-label">
+        <span className="universe-status-dot" />
 
-      <div className="pointer-events-none absolute -bottom-40 -right-32 h-96 w-96 rounded-full bg-blue-600/20 blur-[130px]" />
+        <span>INTERACTIVE TECH UNIVERSE</span>
+      </div>
+      <div className="universe-tooltip">
+        <span ref={tooltipRef} className="universe-tooltip-text" />
+      </div>
+      <div className="universe-instructions">
+        <span>DRAG TO EXPLORE</span>
 
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
+        <span className="instruction-divider">•</span>
 
-      {/* Grid Background */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.8) 1px, transparent 1px)",
-          backgroundSize: "45px 45px",
-        }}
-      />
-
-      {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl">
-        {/* Heading */}
-        <div className="mb-16 text-center">
-          {/* Badge */}
-          <div className="mb-5 inline-flex items-center gap-3 rounded-full border border-cyan-400/30 bg-cyan-400/5 px-5 py-2 backdrop-blur-md">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-400 shadow-[0_0_12px_#22d3ee]" />
-
-            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300">
-              My Skills
-            </span>
-          </div>
-
-          {/* Title */}
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-            Technologies{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-              I Work With
-            </span>
-          </h1>
-
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-gray-400 sm:text-base">
-            A collection of technologies and tools I use to build modern,
-            scalable and interactive web applications.
-          </p>
-
-          {/* Decorative Line */}
-          <div className="mx-auto mt-8 flex w-fit items-center gap-3">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-cyan-400" />
-
-            <div className="h-1.5 w-1.5 rotate-45 bg-cyan-400 shadow-[0_0_12px_#22d3ee]" />
-
-            <div className="h-px w-16 bg-gradient-to-l from-transparent to-purple-500" />
-          </div>
-        </div>
-
-        {/* Skills Grid */}
-        <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {skills.map((skill) => (
-            <div key={skill.name} className="group relative">
-              {/* Outer Glow */}
-              <div
-                className="absolute -inset-[1px] rounded-2xl opacity-0 blur-md transition duration-500 group-hover:opacity-100"
-                style={{
-                  background: skill.glow,
-                }}
-              />
-
-              {/* Card */}
-              <div className="relative flex aspect-square flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#0b1020]/80 p-6 backdrop-blur-xl transition-all duration-500 group-hover:-translate-y-2 group-hover:border-white/30 group-hover:bg-[#10172b]">
-                {/* Inner Gradient */}
-                <div
-                  className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100"
-                  style={{
-                    background: `radial-gradient(circle at center, ${skill.glow}, transparent 65%)`,
-                  }}
-                />
-
-                {/* Top Shine */}
-                <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-
-                {/* Icon */}
-                <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-2xl border border-white/10 bg-black/20 p-5 shadow-[inset_0_0_25px_rgba(255,255,255,0.03)] transition duration-500 group-hover:scale-110">
-                  <img
-                    src={skill.icon}
-                    alt={skill.name}
-                    className="h-full w-full object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]"
-                  />
-                </div>
-
-                {/* Name */}
-                <h3 className="relative z-10 mt-5 text-sm font-semibold tracking-wide text-gray-300 transition group-hover:text-white">
-                  {skill.name}
-                </h3>
-
-                {/* Bottom Glow */}
-                <div
-                  className="relative z-10 mt-3 h-0.5 w-8 rounded-full opacity-40 transition-all duration-500 group-hover:w-14 group-hover:opacity-100"
-                  style={{
-                    background: skill.glow,
-                    boxShadow: `0 0 12px ${skill.glow}`,
-                  }}
-                />
-
-                {/* Corner */}
-                <div className="absolute right-3 top-3 h-2 w-2 rounded-full bg-white/10 transition group-hover:bg-green-400" />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom Text */}
-        <div className="mt-16 text-center">
-          <span className="text-xs uppercase tracking-[0.3em] text-gray-600">
-            Always Learning • Always Building
-          </span>
-        </div>
+        <span>SCROLL TO ZOOM</span>
       </div>
     </section>
   );

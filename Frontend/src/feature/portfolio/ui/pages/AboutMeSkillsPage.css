@@ -1,0 +1,95 @@
+.coding-universe {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  overflow: hidden;
+  background: #03040b;
+}
+
+.coding-universe-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.coding-universe-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.universe-label {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.universe-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 12px #22c55e;
+}
+
+.universe-tooltip {
+  position: absolute;
+  top: 60px;
+  left: 24px;
+  z-index: 2;
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.universe-tooltip-text {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.universe-instructions {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #a1a1aa;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+
+.instruction-divider {
+  color: #7c3aed;
+}
+
+@media (max-width: 768px) {
+  .coding-universe {
+    height: 550px;
+  }
+
+  .universe-label {
+    top: 16px;
+    left: 16px;
+    font-size: 10px;
+  }
+
+  .universe-tooltip {
+    left: 16px;
+  }
+
+  .universe-instructions {
+    left: 16px;
+    bottom: 16px;
+    font-size: 9px;
+    gap: 8px;
+  }
+}
