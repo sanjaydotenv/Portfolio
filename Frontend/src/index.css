@@ -25,3 +25,27 @@
 .animate-marquee {
   animation: marquee 20s linear infinite;
 }
+
+/* #root::-webkit-scrollbar {
+  display: none;
+} */
+
+/* #root {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+} */
+
+/* Chrome, Edge, Safari */
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* Internet Explorer */
+* {
+  -ms-overflow-style: none;
+}
