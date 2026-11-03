@@ -252,10 +252,6 @@ const Footer = () => {
           <p>© {new Date().getFullYear()}</p>
 
           {/* Center */}
-          <p className="order-3 sm:order-2">
-            Designed & developed by{" "}
-            <span className="text-white/70">Sanjay</span>
-          </p>
 
           {/* Back to top */}
           <button

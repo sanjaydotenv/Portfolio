@@ -10,7 +10,8 @@ import Footer from "../components/Footer";
 import { useHandleForm } from "../../hooks/useFormHook";
 
 const ContactForm = () => {
-  const { formHandler, changeHandler } = useHandleForm();
+  const { formHandler, changeHandler, formData, loading, status } =
+    useHandleForm();
 
   const SocialMediaHandles = [
     {
@@ -75,7 +76,6 @@ const ContactForm = () => {
 
   return (
     <div className="w-full">
-
       {/* ================================================= */}
       {/* CONTACT GRID */}
       {/* ================================================= */}
@@ -90,7 +90,6 @@ const ContactForm = () => {
           lg:items-stretch
         "
       >
-
         {/* ================================================= */}
         {/* LEFT - FORM */}
         {/* ================================================= */}
@@ -113,7 +112,6 @@ const ContactForm = () => {
               xl:p-8
             "
           >
-
             {/* FORM TITLE */}
             <h1
               className="
@@ -139,7 +137,6 @@ const ContactForm = () => {
                 md:gap-8
               "
             >
-
               {/* NAME */}
               <div className="flex flex-col gap-2">
                 <label className="text-sm text-[var(--low-opacity-color)]">
@@ -148,7 +145,9 @@ const ContactForm = () => {
 
                 <input
                   name="name"
-                  onInput={changeHandler}
+                  value={formData.name}
+                  onChange={changeHandler}
+                  required
                   className="
                     w-full
                     rounded
@@ -175,7 +174,9 @@ const ContactForm = () => {
 
                 <input
                   name="email"
-                  onInput={changeHandler}
+                  value={formData.email}
+                  onChange={changeHandler}
+                  required
                   className="
                     w-full
                     rounded
@@ -194,33 +195,6 @@ const ContactForm = () => {
                 />
               </div>
 
-              {/* ABOUT */}
-              <div className="flex flex-col gap-2">
-                <label className="text-sm text-[var(--low-opacity-color)]">
-                  What's this about?
-                </label>
-
-                <input
-                  name="aboutyou"
-                  onInput={changeHandler}
-                  className="
-                    w-full
-                    rounded
-                    border
-                    border-[var(--low-opacity-color)]
-                    bg-transparent
-                    px-3 py-3
-                    text-sm
-                    outline-none
-                    transition
-                    focus:border-[var(--primary-color)]
-                    sm:text-base
-                  "
-                  type="text"
-                  placeholder="What's this about?"
-                />
-              </div>
-
               {/* MESSAGE */}
               <div className="flex flex-col gap-2">
                 <label className="text-sm text-[var(--low-opacity-color)]">
@@ -229,7 +203,9 @@ const ContactForm = () => {
 
                 <textarea
                   name="aboutYourProject"
-                  onInput={changeHandler}
+                  value={formData.aboutYourProject}
+                  onChange={changeHandler}
+                  required
                   className="
                     h-32
                     w-full
@@ -262,9 +238,9 @@ const ContactForm = () => {
                   sm:justify-between
                 "
               >
-
                 <button
                   type="submit"
+                  disabled={loading}
                   className="
                     flex w-fit
                     items-center gap-3
@@ -276,9 +252,11 @@ const ContactForm = () => {
                     hover:scale-105
                     sm:px-5
                     sm:text-base
+                    disabled:opacity-50
+                    disabled:cursor-not-allowed
                   "
                 >
-                  Send Message
+                  {loading ? "Sending..." : "Send Message"}
 
                   <span className="mt-1 rotate-[-45deg]">
                     <Arrow />
@@ -293,11 +271,22 @@ const ContactForm = () => {
                     sm:text-xs
                   "
                 >
-                  <MdOutlineWatchLater />
-                  I usually reply within 24 hours
+                  <MdOutlineWatchLater />I usually reply within 24 hours
                 </p>
-
               </div>
+
+              {/* EMAIL STATUS */}
+              {status === "success" && (
+                <p className="text-sm text-green-400">
+                  Message sent successfully!
+                </p>
+              )}
+
+              {status === "error" && (
+                <p className="text-sm text-red-400">
+                  Failed to send message. Please try again.
+                </p>
+              )}
             </form>
           </div>
         </div>
@@ -316,7 +305,6 @@ const ContactForm = () => {
             lg:w-[38%]
           "
         >
-
           {/* ================= CONNECT ================= */}
 
           <div
@@ -331,7 +319,6 @@ const ContactForm = () => {
               md:p-6
             "
           >
-
             <h1
               className="
                 flex items-center gap-3
@@ -345,7 +332,6 @@ const ContactForm = () => {
             </h1>
 
             <div className="mt-6 flex flex-col gap-3 sm:gap-4">
-
               {SocialMediaHandles.map((item) => (
                 <div
                   key={item.label}
@@ -366,7 +352,6 @@ const ContactForm = () => {
                     md:px-4
                   "
                 >
-
                   <div
                     className="
                       flex
@@ -377,7 +362,6 @@ const ContactForm = () => {
                       sm:gap-4
                     "
                   >
-
                     {/* ICON */}
                     <div
                       className="
@@ -431,10 +415,8 @@ const ContactForm = () => {
                   >
                     {item.arrow}
                   </div>
-
                 </div>
               ))}
-
             </div>
           </div>
 
@@ -452,7 +434,6 @@ const ContactForm = () => {
               md:p-6
             "
           >
-
             <h1
               className="
                 flex items-center gap-2
@@ -465,13 +446,8 @@ const ContactForm = () => {
             </h1>
 
             <div className="mt-5 flex flex-col gap-3">
-
               {AVAILABLE.map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-center gap-3"
-                >
-
+                <div key={item.label} className="flex items-center gap-3">
                   <div
                     className="
                       flex
@@ -490,13 +466,10 @@ const ContactForm = () => {
                   <div className="text-sm sm:text-base">
                     <i>{item.label}</i>
                   </div>
-
                 </div>
               ))}
-
             </div>
           </div>
-
         </div>
       </div>
 
@@ -522,7 +495,6 @@ const ContactForm = () => {
 
       {/* FOOTER */}
       <Footer />
-
     </div>
   );
 };
