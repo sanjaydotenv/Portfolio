@@ -7,7 +7,6 @@ import ContactPage from "./feature/portfolio/ui/pages/ContactPage";
 import Lenis from "lenis";
 
 const App = () => {
-
   useEffect(() => {
     const lenis = new Lenis({
       duration: 2,
@@ -27,10 +26,8 @@ const App = () => {
     };
   }, []);
 
-
   return (
     <main className="min-h-screen w-full overflow-hidden bg-[var(--main-bg)] text-[var(--secondary-color)]">
-
       <Navbar />
 
       <div>
@@ -38,19 +35,18 @@ const App = () => {
           <HomePage />
         </section>
 
-       <section id="about-me">
-  <AboutMePage />
-</section>
+        <section id="about-me">
+          <AboutMePage />
+        </section>
 
-<section id="work">
-  <ProjectPage />
-</section>
+        <section id="work">
+          <ProjectPage />
+        </section>
 
         <section id="contact" className="scroll-mt-20">
           <ContactPage />
         </section>
       </div>
-
     </main>
   );
 };
